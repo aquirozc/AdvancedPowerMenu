@@ -39,7 +39,7 @@
                     android:id="@+id/shutdown_txt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
+                    android:text="@string/shutdown_txt"
                     android:textAlignment="center" />
 
             </LinearLayout>
@@ -60,7 +60,7 @@
                     android:id="@+id/reboot_txt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
+                    android:text="@string/reboot_txt"
                     android:textAlignment="center" />
             </LinearLayout>
 
@@ -87,7 +87,7 @@
                     android:id="@+id/recovery_txt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
+                    android:text="@string/recovery_txt"
                     android:textAlignment="center" />
 
             </LinearLayout>
@@ -108,7 +108,7 @@
                     android:id="@+id/fastboot_txt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
+                    android:text="@string/fastboot_txt"
                     android:textAlignment="center" />
 
             </LinearLayout>

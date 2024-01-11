@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">Advanced Power Menu</string>
+    <string name="app_name">Advanced Power Menu Beta</string>
+    <string name="shutdown_txt">Power Off</string>
+    <string name="reboot_txt">Reboot</string>
+    <string name="recovery_txt">Recovery Mode</string>
+    <string name="fastboot_txt">Fastboot</string>
 </resources>
