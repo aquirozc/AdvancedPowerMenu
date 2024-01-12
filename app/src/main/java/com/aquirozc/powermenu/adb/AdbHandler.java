@@ -3,57 +3,47 @@ package com.aquirozc.powermenu.adb;
 import android.content.Context;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.os.StrictMode;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.tananaev.adblib.AdbConnection;
 import com.tananaev.adblib.AdbCrypto;
 
-import java.io.IOException;
 import java.net.Socket;
 
 public class AdbHandler {
 
-   AdbCrypto crypto;
-   Context context;
+    Context context;
+    Handler handler;
+    AdbCrypto crypto;
 
-    public AdbHandler(AdbCrypto crypto, Context context){
+    public AdbHandler(Context context){
 
+        HandlerThread thread = new HandlerThread("ADB_THREAD");
+        thread.start();
+
+        handler = new Handler(thread.getLooper());
+        crypto = KeyLoader.loadKeyPair(context.getFilesDir());
 
         this.context = context;
-        this.crypto = crypto;
-
     }
 
     public void sendRequest(PowerOption c) {
 
-        Toast.makeText(context,c.command,Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, c.command, Toast.LENGTH_SHORT).show();
 
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        handler.post(() -> {
+          try(Socket socket = new Socket("localhost",5555);
+              AdbConnection connection = AdbConnection.create(socket,crypto)){
 
-        StrictMode.setThreadPolicy(policy);
+            connection.connect();
+            connection.open(c.command).read();
 
-        HandlerThread thread = new HandlerThread("adbthread");
-        thread.start();
-
-        Handler handler = new Handler(thread.getLooper());
-
-       handler.post(() -> {
-           AdbConnection connection = null;
-           try(Socket socket = new Socket("localhost", 5555)){
-               connection = AdbConnection.create(socket,crypto);
-               try{
-                   connection.connect();
-                   connection.open(c.command);
-                   connection.close();
-               }catch (Exception e){
-                   Log.e("ADB_HANDLER", e.getMessage());
-               }
-           } catch (IOException e) {
-               Log.e("ADB_HANDLER", e.getMessage());
-           }
+          } catch (Exception e){
+              Log.e("ADB_HANDLER", e.getMessage());
+          }
        });
+
     }
 
 }

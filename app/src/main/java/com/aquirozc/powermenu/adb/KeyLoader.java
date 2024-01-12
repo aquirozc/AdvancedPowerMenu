@@ -25,16 +25,18 @@ public class KeyLoader {
 
             if(publicKey.exists() && privateKey.exists()){
                 crypto = AdbCrypto.loadAdbKeyPair(encoder,privateKey,publicKey);
+                Log.e("KEY_LOADER", "KEYS DO EXITS");
                 return crypto;
             }
 
             crypto = AdbCrypto.generateAdbKeyPair(encoder);
             crypto.saveAdbKeyPair(privateKey,publicKey);
+            Log.e("KEY_LOADER", "KEYS NOT EXITS");
 
-        }catch (IOException | InvalidKeySpecException Exception){
-            Log.e("KEY_LOADER", "");
+        }catch (IOException | InvalidKeySpecException exception){
+            Log.e("KEY_LOADER", exception.getMessage());
         }catch (NoSuchAlgorithmException exception){
-            Log.e("KEY_LOADER", "");
+            Log.e("KEY_LOADER", exception.getMessage());
         }
 
         return  crypto;

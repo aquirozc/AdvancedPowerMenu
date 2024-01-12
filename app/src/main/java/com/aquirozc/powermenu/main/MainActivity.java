@@ -2,6 +2,7 @@ package com.aquirozc.powermenu.main;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -12,6 +13,7 @@ import com.aquirozc.powermenu.R;
 import com.aquirozc.powermenu.adb.AdbHandler;
 import com.aquirozc.powermenu.adb.KeyLoader;
 import com.aquirozc.powermenu.adb.PowerOption;
+import com.aquirozc.powermenu.net.DebugPortFinder;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        AdbHandler handler = new AdbHandler(KeyLoader.loadKeyPair(getApplicationContext().getFilesDir()),this);
+        AdbHandler handler = new AdbHandler(getApplicationContext());
 
         findViewById(R.id.shutdown_btn).setOnClickListener(e -> handler.sendRequest(PowerOption.POWER_OFF));
         findViewById(R.id.reboot_btn).setOnClickListener(e -> handler.sendRequest(PowerOption.REBOOT));
